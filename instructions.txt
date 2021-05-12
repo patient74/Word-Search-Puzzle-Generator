@@ -1,0 +1,177 @@
+Instructions:
+
+*)The program takes words as input and generates a word search puzzle.
+
+*)Minimum length of a word should be 3.
+
+*)Words with spaces are considered as separate.
+
+*)Words can be in horizontal, vertical or diagonal(from top and bottom) directions.
+
+*)Words will not be in reverse order.
+
+*)Letters of the words might overlap.
+
+
+Example:
+
+A simple example where input words are related to the theme animals
+
+Input: DEER DOG SHEEP CAT
+
+
+First we decide the size. To decide size:
+
+Arrange the word in descending order
+
+SHEEP DEER DOG CAT
+
+total_letters= 15
+
+Let row= length of longest word. row= 5
+
+if(row * row) <= total_letters)
+{
+  column = row;
+  then we keep increasing row and column by 1 such that row * column > total_letters. 
+}
+
+else
+{
+  column= total_letters/ row; //here column= 15/5
+  if(total_letters % row > 0)
+  column++;
+  
+  column= column *2; //here column will be 6
+   if(column > length of longest word)
+   column= row; //here column will be 5. This is necessary so that long words can be placed in every direction and not only in vertical direction.
+} 
+
+
+Now, row= 5 and column= 5
+
+*(0)  *(1)  *(2)  *(3)  *(4)
+
+*(5)  *(6)  *(7)  *(8)  *(9)
+
+*(10) *(11) *(12) *(13) *(14)
+
+*(15) *(16) *(17) *(18) *(19)
+
+*(20) *(21) *(22) *(23) *(24)
+
+
+Now we start placing the words:
+
+Words can be placed in any of the four direction: horizontal, vertical, diagonal from the top and diagonal from the bottom.
+
+For the first word(longest) we select any direction randomly
+Lets say for SHEEP horizontal direction is selected.
+Valid points for the word SHEEP in horizontal direction are: 0, 5, 10, 15, 20
+Select one of the points randomly. Lets say point 10 is selected. 
+Place the word from that point in the direction selected.
+
+*(0)  *(1)  *(2)  *(3)  *(4)
+
+*(5)  *(6)  *(7)  *(8)  *(9)
+
+  S     H     E     E     P
+
+*(15) *(16) *(17) *(18) *(19)
+
+*(20) *(21) *(22) *(23) *(24)
+
+
+Now the next longer word (word of length less than the longest word) is not placed in the same direction as the longest word. By doing this we
+avoid the possibility that next words will be placed in only one direction (horizontal or vertical). 
+Assume that the word DEER was also placed horizontally,
+
+
+*(0)  *(1)  *(2)  *(3)  *(4)
+
+*(5)  *(6)  *(7)  *(8)  *(9)
+
+  S     H     E     E     P
+
+  D     E     E     R   *(19)
+
+*(20) *(21) *(22) *(23) *(24)
+
+So unless there was overlap of letters for the next words, they would be placed horizontally. So to avoid this the next longer word is placed in any
+direction other than the longest word.
+So DEER can be placed vertically or diagonally from the top or bottom.
+Suppose randomly vertical direction and point 2 was selected
+
+*(0)  *(1)    D   *(3)  *(4)
+
+*(5)  *(6)    E   *(8)  *(9)
+
+  S     H     E     E     P
+
+*(15) *(16)   R   *(18) *(19)
+
+*(20) *(21) *(22) *(23) *(24)
+
+
+(If the next longer word could not be placed in any direction 
+ then we place the longest word again but this time in a different direction than the previous one.)
+
+Now place the next words by selecting randomly any of the four directions and any of the valid point for that direction
+
+For DOG if horizontal direction was selected
+Valid points for the word DOG in horizontal direction: 2, 20, 21, 22
+point selected: 21
+
+*(0)  *(1)    D   *(3)  *(4)
+
+*(5)  *(6)    E   *(8)  *(9)
+
+  S     H     E     E     P
+
+*(15) *(16)   R   *(18) *(19)
+
+*(20)   D     O     G   *(24)
+
+Now the word CAT cannot be placed in any direction. Therefore we reset the puzzle. 
+While resetting if row==column we add a row, else we add a column
+here row= column. So we add a row. So, row=6
+
+
+*(0)  *(1)  *(2)  *(3)  *(4)
+
+*(5)  *(6)  *(7)  *(8)  *(9)
+
+*(10) *(11) *(12) *(13) *(14)
+
+*(15) *(16) *(17) *(18) *(19)
+
+*(20) *(21) *(22) *(23) *(24)
+
+*(25) *(26) *(27) *(28) *(29)
+
+
+Similarly, we follow the above steps again for placing the words.
+
+For SHEEP: direction= diagonal from the bottom, point=25. (Assume randomly selected)
+For DEER:  direction= vertical(direction other than for SHEEP), point= 14.
+For DOG:   direction= vertical, point= 0.
+For CAT:   direction= diagonal from the bottom, point= 26.
+
+
+  D   *(1)  *(2)  *(3)  *(4)
+
+  O   *(6)  *(7)  *(8)    P
+
+  G   *(11) *(12)   E     D
+
+*(15) *(16)   E     T     E
+
+*(20)   H     A   *(23)   E
+
+  S     C   *(27) *(28)   R
+
+
+Finally fill the remaining words with random letters.
+
+
+  
